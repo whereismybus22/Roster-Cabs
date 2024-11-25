@@ -90,21 +90,29 @@ function calculateDistanceTimeSpeed(locationOne, locationTwo, speed) {
 }
 
 async function fetchBusLocation() {
-  const auth = "$2y$10$Wc4YlsxCSGCmKrEpX9efX.yKreFA2k6INrQgwUzSnLp0/IxeffTLi";
-  const url = `https://portal.hypegpstracker.com/api/get_devices?user_api_hash=${auth}`;
+  const auth =
+    "RjBEAiBqdeIUR3PtuM4O5alnn9pvuaM0FNhfYcSeBCloMvELLAIgCBBeOlzuKV_iGS3VIhLL9qMf63BBQhnKPPh1d58Wn6p7InUiOjYzOTQwLCJlIjoiMjAyNC0xMi0wMVQxODozMDowMC4wMDArMDA6MDAifQ";
+  const url = `https://demo.traccar.org/api/positions?deviceId=8497`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${auth}`,
+      },
+    });
+
+    if (!response.ok) {
+      console.error(`Error fetching data: ${response.statusText}`);
+      return;
+    }
+
     const data = await response.json();
     const filteredData = filterData(data);
 
     if (!filteredData) {
-      console.error(
-        "MLR Institute of Technology or the item with id 446 not found"
-      );
+      console.error("No valid data found for the specified device");
       return;
     }
-
     previousBusLocation = [...presentBusLocation];
     presentBusLocation = [filteredData.lat, filteredData.lng];
     // console.log(presentBusLocation);
@@ -171,7 +179,7 @@ async function fetchBusLocation() {
           }),
         }).addTo(map);
         const bounds = L.latLngBounds([company, presentBusLocation]);
-        map.fitBounds(bounds, { padding: [80, 80, 80, 80] });
+        map.fitBounds(bounds, { padding: [50, 50, 50, 50] });
 
         busMarker.on("click", function () {
           shouldFollowMarker = true;
@@ -229,14 +237,16 @@ async function fetchBusLocation() {
 }
 
 function filterData(data) {
-  const mlrInstitute = data.find((entry) => entry.id === 0);
-  if (!mlrInstitute) return null;
+  if (!Array.isArray(data) || data.length === 0) return null;
 
-  const item = mlrInstitute.items.find((item) => item.id === 376);
-  if (!item) return null;
+  const entry = data[0]; // Assuming the data contains only one object per request
+  const { latitude, longitude, speed } = entry;
 
-  const { lat, lng, speed } = item;
-  return { lat, lng, speed };
+  return {
+    lat: latitude,
+    lng: longitude,
+    speed: speed * 1.609, // Convert speed to km/h
+  };
 }
 
 function interpolatePosition(start, end, progress) {
