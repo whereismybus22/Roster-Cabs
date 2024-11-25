@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info Page</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+
+        #first-div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2%;
+            padding-bottom: 2%;
+            border-bottom: 1.5px solid #000;
+        }
+
+        #backButton {
+            height: 25px;
+            width: 25px;
+            margin-left: 1%;
+        }
+
+        #first-div div {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            margin-right: 4%;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        #search-bar {
+            width: 80%;
+            padding: 12px 20px 12px 45px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        #search-bar:focus {
+            border: 1px solid #0078D7;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            opacity: 0.5;
+        }
+
+        #drivers-info {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .driver-box {
+            background-color: #ffffff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 85%;
+        }
+
+        .driver-name {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .driver-details {
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .phone-number-label {
+            font-size: 17px;
+        }
+
+        .phone-number {
+            font-size: 1rem;
+            color: #007bff;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="first-div">
+            <img id="backButton" src="img/backArrow_street.svg" alt="Back" onclick="window.history.back();">
+            <div>Cab Drivers</div>
+        </div>
+
+        <div class="search-container">
+            <img src="/img/search.png" alt="Search" class="search-icon">
+            <input type="text" id="search-bar" placeholder="Search route number..." onkeyup="filterDrivers()">
+        </div>
+
+        <div id="drivers-info"></div>
+    </div>
+
+    <script>
+        const driverDetails = [
+            { name: "G.V Reddy", phone: "9000252535" },
+            { name: "M.N Reddy", phone: "9494444468" },
+            { name: "T.N Rao", phone: "9963120818" },
+            { name: "P Kantaiah", phone: "8074017988" },
+            { name: "Subash Rao", phone: "7036864220" },
+            { name: "SD . Zafeer", phone: "9948056679" },
+            { name: "Dasharatham", phone: "7382817805" },
+            { name: "Esu Padham", phone: "9182265556" },
+            { name: "Siddi Ramulu", phone: "8466850500" },
+            { name: "B . Ram Reddy", phone: "8332022569" },
+            { name: "G.V Reddy", phone: "9000252535" },
+            { name: "M.N Reddy", phone: "9494444468" },
+            { name: "T.N Rao", phone: "9963120818" },
+            { name: "P Kantaiah", phone: "8074017988" },
+            { name: "Subash Rao", phone: "7036864220" },
+            { name: "SD . Zafeer", phone: "9948056679" },
+            { name: "Dasharatham", phone: "7382817805" },
+            { name: "Esu Padham", phone: "9182265556" },
+            { name: "Siddi Ramulu", phone: "8466850500" },
+            { name: "B . Ram Reddy", phone: "8332022569" },
+            { name: "G.V Reddy", phone: "9000252535" },
+            { name: "M.N Reddy", phone: "9494444468" },
+            { name: "T.N Rao", phone: "9963120818" },
+            { name: "P Kantaiah", phone: "8074017988" },
+            { name: "Subash Rao", phone: "7036864220" },
+            { name: "SD . Zafeer", phone: "9948056679" },
+            { name: "Dasharatham", phone: "7382817805" },
+            { name: "Esu Padham", phone: "9182265556" },
+            { name: "Siddi Ramulu", phone: "8466850500" },
+            { name: "B . Ram Reddy", phone: "8332022569" },
+            { name: "G.V Reddy", phone: "9000252535" },
+            { name: "M.N Reddy", phone: "9494444468" },
+            { name: "T.N Rao", phone: "9963120818" },
+            { name: "P Kantaiah", phone: "8074017988" },
+            { name: "Subash Rao", phone: "7036864220" },
+            { name: "SD . Zafeer", phone: "9948056679" },
+            { name: "Dasharatham", phone: "7382817805" },
+            { name: "Esu Padham", phone: "9182265556" },
+            { name: "Siddi Ramulu", phone: "8466850500" },
+            { name: "B . Ram Reddy", phone: "8332022569" },
+            { name: "G.V Reddy", phone: "9000252535" },
+            { name: "M.N Reddy", phone: "9494444468" },
+            { name: "T.N Rao", phone: "9963120818" },
+            { name: "P Kantaiah", phone: "8074017988" },
+            { name: "Subash Rao", phone: "7036864220" },
+            { name: "SD . Zafeer", phone: "9948056679" },
+            { name: "Dasharatham", phone: "7382817805" },
+            { name: "Esu Padham", phone: "9182265556" },
+            { name: "Siddi Ramulu", phone: "8466850500" },
+            { name: "B . Ram Reddy", phone: "8332022569" },
+            { name: "G.V Reddy", phone: "9000252535" },
+            { name: "M.N Reddy", phone: "9494444468" },
+            { name: "T.N Rao", phone: "9963120818" },
+            { name: "P Kantaiah", phone: "8074017988" },
+            { name: "Subash Rao", phone: "7036864220" },
+            { name: "SD . Zafeer", phone: "9948056679" },
+            { name: "Dasharatham", phone: "7382817805" },
+            { name: "Esu Padham", phone: "9182265556" },
+            { name: "Siddi Ramulu", phone: "8466850500" },
+            { name: "B . Ram Reddy", phone: "8332022569" },
+            { name: "G.V Reddy", phone: "9000252535" },
+            { name: "M.N Reddy", phone: "9494444468" },
+            { name: "T.N Rao", phone: "9963120818" },
+            { name: "P Kantaiah", phone: "8074017988" },
+            { name: "Subash Rao", phone: "7036864220" },
+            { name: "SD . Zafeer", phone: "9948056679" },
+            { name: "Dasharatham", phone: "7382817805" },
+            { name: "Esu Padham", phone: "9182265556" },
+            { name: "Siddi Ramulu", phone: "8466850500" },
+            // Repeat or change the pattern for 69 drivers
+        ];
+
+        const driversInfo = document.getElementById("drivers-info");
+        const cars = ['4524', '3571', '6035', '1201', '0992', '8151', '8343', '3198', '7951', '0541'];
+
+        for (let i = 1; i <= 10; i++) {
+            const driverBox = document.createElement("div");
+            driverBox.className = "driver-box";
+
+            const routeName = document.createElement("div");
+            routeName.className = "driver-name";
+            routeName.textContent = `Cab ${cars[i-1]} Driver`;
+
+            const details = driverDetails[i - 1];
+            const driverDetailsDiv = document.createElement("div");
+            driverDetailsDiv.className = "driver-details";
+            driverDetailsDiv.textContent = `Name: ${details.name}`;
+
+            const phoneNumberDiv = document.createElement("div");
+            phoneNumberDiv.innerHTML = `<span class="phone-number-label">Phone Number :</span> 
+                                        <a href="tel:${details.phone}" class="phone-number">${details.phone}</a>`;
+
+            driverBox.appendChild(routeName);
+            driverBox.appendChild(driverDetailsDiv);
+            driverBox.appendChild(phoneNumberDiv);
+            driversInfo.appendChild(driverBox);
+        }
+
+        function filterDrivers() {
+            const query = document.getElementById("search-bar").value.toLowerCase();
+            const drivers = document.querySelectorAll(".driver-box");
+
+            drivers.forEach(driver => {
+                const routeNumber = driver.querySelector(".driver-name").textContent.toLowerCase();
+                driver.style.display = routeNumber.includes(query) ? "block" : "none";
+            });
+        }
+    </script>
+</body>
+</html>

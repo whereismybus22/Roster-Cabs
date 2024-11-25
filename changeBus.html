@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>All Cabs</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Responsive adjustments */
+        @media only screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            .bus-route-button {
+                font-size: 16px;
+            }
+        }
+
+        /* First-div styles */
+        #first-div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2%;
+            padding-bottom: 2%;
+            border-bottom: 1.5px solid #000;
+        }
+
+        #backButton {
+            height: 50px;
+            width: 50px;
+            margin-left: 1%;
+        }
+
+        #infoButton {
+            height: 28px;
+            width: 28px;
+            margin-right: 1%;
+        }
+
+        #first-div div {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            margin-left: 2%;
+        }
+
+        /* Enhanced search bar styles */
+        .search-container {
+            position: relative;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        #search-bar {
+            width: 80%;
+            padding: 12px 20px 12px 45px; /* Padding for icon */
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        #search-bar:focus {
+            border: 1px solid #0078D7;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            opacity: 0.5;
+        }
+
+        /* Routes div styles */
+        #routes {
+            margin-top: 20px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .bus-route-button {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+        }
+    </style>
+    <script>
+        // Function to retrieve cookies
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Check if cookie is set on load
+        // window.onload = function () {
+        //     const cookieName = "busDetails";
+        //     const busDetails = getCookie(cookieName);
+
+        //     if (!busDetails) {
+        //         // Redirect to index.html if cookie is not present
+        //         window.location.href = "index.html";
+        //     }
+        // };
+        
+        function redirectToRoute(route) {
+            window.location.href = route;
+        }
+
+        function openInfo() {
+            window.location.href = "info.html";
+        }
+
+        // Function to filter routes based on search input
+        function filterRoutes() {
+            const query = document.getElementById("search-bar").value.toLowerCase();
+            const routes = document.querySelectorAll(".bus-route-button");
+
+            routes.forEach(route => {
+                const routeNumber = route.alt.split(" ")[1]; // Gets the number from alt text
+                route.style.display = routeNumber.includes(query) ? "block" : "none";
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="first-div">
+            <img id="backButton" src="/fullMap-ZeroCodeHR2.gif" alt="fullMap" onclick="window.location='/fullMap.html';">
+            <div>All Cabs</div>
+            <img id="infoButton" src="img/contacts.svg" alt="Info" onclick="openInfo();">
+        </div>
+
+        <!-- Search bar with icon for filtering routes -->
+        <div class="search-container">
+            <img src="/img/search.png" alt="Search" class="search-icon"> <!-- Replace with an appropriate icon -->
+            <input type="text" id="search-bar" placeholder="Search cab number..." onkeyup="filterRoutes()">
+        </div>
+
+        <!-- Routes div with image buttons -->
+        <div id="routes">
+            <script>
+                // JavaScript to dynamically create route buttons
+                const routesContainer = document.getElementById("routes");
+                const cars = ['4524', '3571', '6035', '1201', '0992', '8151', '8343', '3198', '7951', '0541'];
+                
+                for (let i = 0; i < cars.length; i++) {
+                    const routeButton = document.createElement("img");
+                    routeButton.className = "bus-route-button";
+                    routeButton.src = `route${cars[i]}/img/changeBus.svg`; // Adjusts path based on index
+                    routeButton.alt = `Route ${cars[i]}`;
+                    routeButton.onclick = () => redirectToRoute(`route${cars[i]}`); // Redirect using bus number
+                    routesContainer.appendChild(routeButton);
+                }
+            </script>
+        </div>        
+    </div>
+</body>
+
+</html>

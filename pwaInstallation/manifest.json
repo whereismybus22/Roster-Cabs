@@ -1,0 +1,16 @@
+{
+    "name": "Roster Cabs",
+    "short_name": "Roster Cabs",
+    "description": "Your destination for seamless Bus Tracking — Anytime, Anywhere.",
+    "start_url": "/indexMain.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "icons": [
+        {
+            "src": "/pwaInstallation/images/logo682.png",
+            "sizes": "682x682",
+            "type": "image/png"
+        }
+    ]
+}
