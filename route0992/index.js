@@ -208,11 +208,10 @@ async function fetchBusLocation() {
           animate: true,
         });
       }
-      const speedd = Math.round(filteredData.speed);
+      const speedd = Math.round(filteredData.speed );
       const result = await calculateDistanceTimeSpeed(
         presentBusLocation,
-        toLocation,
-        filteredData.speed
+        toLocation
       );
       document.getElementById("distance").textContent = result.distance;
       document.getElementById("time").textContent = result.time;
@@ -222,8 +221,7 @@ async function fetchBusLocation() {
         const speedd = Math.round(filteredData.speed);
         const result = await calculateDistanceTimeSpeed(
           presentBusLocation,
-          toLocation,
-          filteredData.speed
+          toLocation
         );
         document.getElementById("distance").textContent = result.distance;
         document.getElementById("time").textContent = result.time;
