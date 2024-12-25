@@ -186,7 +186,7 @@ async function fetchBusLocation() {
           document.querySelector(
             ".follow-marker-button"
           ).style.backgroundColor = "white";
-          map.flyTo(presentBusLocation, 19, {
+          map.flyTo(presentBusLocation, 18, {
             animate: true,
           });
           map.once("zoomend", function () {
@@ -204,7 +204,7 @@ async function fetchBusLocation() {
       }
 
       if (shouldFollowMarker) {
-        map.flyTo(presentBusLocation, 19, {
+        map.flyTo(presentBusLocation, 18, {
           animate: true,
         });
       }
@@ -277,7 +277,7 @@ function toggleFollowMarker() {
   // console.log(shouldFollowMarker);
   document.querySelector(".follow-marker-button").style.backgroundColor =
     "white";
-  map.flyTo(presentBusLocation, 19, {
+  map.flyTo(presentBusLocation, 18, {
     animate: true,
   });
   map.once("zoomend", function () {
@@ -318,7 +318,7 @@ var map = L.map("map", {
   attribution: "© OpenStreetMap contributors",
   layers: [streetLayer], // Default layer is street view
   zoomSnap: 0.25, // Adjust this value as needed
-}).setView([0, 0], 19);
+}).setView([0, 0], 18);
 
 var path = "";
 if (istTime >= 2 && istTime <= 13) {
@@ -337,7 +337,7 @@ var companyMarker = L.marker(company, {
 }).addTo(map);
 
 companyMarker.on("click", function () {
-  map.flyTo(company, 19, {
+  map.flyTo(company, 18, {
     animate: true,
   });
   map.once("zoomend", function () {});
