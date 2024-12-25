@@ -36,8 +36,9 @@
         }
 
         .logo-menu img.logo {
-            width: 34px;
-            height: 35px;
+            margin-right: 15px;
+            width: 38px;
+            height: 38px;
         }
 
         .logo-menu img.change {
@@ -46,8 +47,8 @@
         }
 
         .logo-menu img.settings {
-            width: 28px;
-            height: 28px;
+            width: 45px;
+            height: 45px;
         }
 
         .info-panel {
@@ -117,6 +118,19 @@
             height: 35px;
         }
 
+        .location-address-button {
+            position: fixed;
+            right: 6px;
+            z-index: 1000;
+            margin-top: 80px;
+            /* Adjusted to place below the set-user-bus-button */
+        }
+
+        .location-address-button img {
+            width: 35px;
+            height: 35px;
+        }
+
         .follow-marker-button {
             position: fixed;
             bottom: 15px;
@@ -130,15 +144,55 @@
             height: 30px;
         }
 
+        #iframe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* background-color: rgba(0, 0, 0, 0.5); */
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1002;
+            background-color: white;
+
+        }
+
+        iframe {
+
+            border: none;
+            background: transparent;
+        }
+
+        #close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+            line-height: 40px;
+        }
+
+        #close-btn:hover {
+            background-color: darkred;
+        }
     </style>
 </head>
 
 <body>
     <header>
         <div class="logo-menu">
-            <img class="logo" src="../img/logo.svg" alt="Logo" onclick="redirectToIndex();">
+            <img class="logo" src="../pwaInstallation/images/logo682.png" alt="Logo" onclick="redirectToIndex();">
             <img class="change" src="/change-route.svg" alt="Change" onclick="redirectToChange();">
-            <img class="settings" src="../img/profile.svg" alt="Settings" onclick="redirectToSettings();">
+            <img class="settings" src="../img/credits.gif" alt="Settings" onclick="redirectToSettings();">
         </div>
         <div class="info-panel">
             <div class="info-item">
@@ -165,15 +219,24 @@
             <div class="set-user-bus-button" onclick="setUserBus()">
                 <img src="../img/follow_user.png" alt="Set User Bus">
             </div>
+            <div class="location-address-button" >
+                <img id="locationAddressID" src="../img/locationAddress.png" alt="Location Address">
+            </div>
         </div>
     </div>
+
+    <div id="iframe-container">
+        <button id="close-btn">&times;</button>
+        <iframe id="location-iframe"></iframe>
+    </div>
+
     <img class="follow-marker-button" src="../img/follow.png" alt="Follow Marker" onclick="toggleFollowMarker()">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
     <script>
         let isUserBusSet = false;  // Variable to keep track of toggle state
         let userLocationMarker;    // Variable to store the user location marker
-        let toLocation=[17.450644316431145, 78.38118489645902] ;
+        let toLocation = [17.450644316431145, 78.38118489645902];
 
         // Custom icon for the user's location marker
         const userLocationIcon = L.icon({
@@ -207,7 +270,7 @@
                                 [latitude, longitude],
                                 presentBusLocation
                             ]);
-                            toLocation=[latitude,longitude];
+                            toLocation = [latitude, longitude];
                             // Set user bus
                             map.flyToBounds(bounds, { padding: [80, 80, 80, 80] });
                             document.querySelector('.set-user-bus-button img').src = "../img/follow_user_not.png";
@@ -246,7 +309,7 @@
                     alert("Geolocation is not supported by this browser.");
                 }
             } else {
-                toLocation=[17.450644316431145, 78.38118489645902];
+                toLocation = [17.450644316431145, 78.38118489645902];
                 // Reset to previous bounds or state
                 map.fitBounds(L.latLngBounds([company, presentBusLocation]), { padding: [50, 50, 50, 50] });
                 document.querySelector('.set-user-bus-button img').src = "../img/follow_user.png";
@@ -265,6 +328,27 @@
         }
 
 
+    </script>
+    <script>
+
+        // Event listener for the "Click Here" button
+        document.getElementById('locationAddressID').addEventListener('click', function () {
+            // Construct the URL for two.html with query parameters
+            var url = "/two.html?lat=" + presentBusLocation[0] + "&lng=" + presentBusLocation[1];
+
+            // Set the iframe src and display the iframe container
+            var iframe = document.getElementById('location-iframe');
+            iframe.src = url;
+            document.getElementById('iframe-container').style.display = 'flex';
+        });
+
+        // Event listener for the "Close" button
+        document.getElementById('close-btn').addEventListener('click', function () {
+            // Hide the iframe container and clear the iframe src
+            var iframe = document.getElementById('location-iframe');
+            iframe.src = '';
+            document.getElementById('iframe-container').style.display = 'none';
+        });
     </script>
 
 
