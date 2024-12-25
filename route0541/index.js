@@ -91,8 +91,8 @@ function calculateDistanceTimeSpeed(locationOne, locationTwo, speed) {
 
 async function fetchBusLocation() {
   const auth =
-    "RjBEAiBqdeIUR3PtuM4O5alnn9pvuaM0FNhfYcSeBCloMvELLAIgCBBeOlzuKV_iGS3VIhLL9qMf63BBQhnKPPh1d58Wn6p7InUiOjYzOTQwLCJlIjoiMjAyNC0xMi0wMVQxODozMDowMC4wMDArMDA6MDAifQ";
-  const url = `https://demo.traccar.org/api/positions?deviceId=8497`;
+    "RTBDAh85Pi1YP33askXejncUD1bbZA2Bd_HI3ISXSOy9SnSuAiBLmqgmHq4YIxFqNNsQx1FLiY1lVs1pFyhAuUal5yPCGHsidSI6NjM5NDAsImUiOiIyMDI1LTExLTMwVDE4OjMwOjAwLjAwMCswMDowMCJ9";
+  const url = `https://demo.traccar.org/api/positions?deviceId=11529`;
 
   try {
     const response = await fetch(url, {
@@ -186,7 +186,7 @@ async function fetchBusLocation() {
           document.querySelector(
             ".follow-marker-button"
           ).style.backgroundColor = "white";
-          map.flyTo(presentBusLocation, 19, {
+          map.flyTo(presentBusLocation, 18, {
             animate: true,
           });
           map.once("zoomend", function () {
@@ -204,7 +204,7 @@ async function fetchBusLocation() {
       }
 
       if (shouldFollowMarker) {
-        map.flyTo(presentBusLocation, 19, {
+        map.flyTo(presentBusLocation, 18, {
           animate: true,
         });
       }
@@ -390,4 +390,4 @@ map.on("dragstart", function () {
 });
 
 fetchBusLocation();
-setInterval(fetchBusLocation, 10000);
+setInterval(fetchBusLocation, 5000);
