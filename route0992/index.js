@@ -91,8 +91,13 @@ function calculateDistanceTimeSpeed(locationOne, locationTwo, speed) {
 
 async function fetchBusLocation() {
   const auth =
+<<<<<<< Updated upstream
     "RjBEAiBqdeIUR3PtuM4O5alnn9pvuaM0FNhfYcSeBCloMvELLAIgCBBeOlzuKV_iGS3VIhLL9qMf63BBQhnKPPh1d58Wn6p7InUiOjYzOTQwLCJlIjoiMjAyNC0xMi0wMVQxODozMDowMC4wMDArMDA6MDAifQ";
   const url = `https://demo.traccar.org/api/positions?deviceId=9350`;
+=======
+    "RTBDAh85Pi1YP33askXejncUD1bbZA2Bd_HI3ISXSOy9SnSuAiBLmqgmHq4YIxFqNNsQx1FLiY1lVs1pFyhAuUal5yPCGHsidSI6NjM5NDAsImUiOiIyMDI1LTExLTMwVDE4OjMwOjAwLjAwMCswMDowMCJ9";
+  const url = `https://demo.traccar.org/api/positions?deviceId=11561`;
+>>>>>>> Stashed changes
 
   try {
     const response = await fetch(url, {
@@ -389,4 +394,4 @@ map.on("dragstart", function () {
 });
 
 fetchBusLocation();
-setInterval(fetchBusLocation, 10000);
+setInterval(fetchBusLocation, 5000);
