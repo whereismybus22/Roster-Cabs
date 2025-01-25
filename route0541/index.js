@@ -91,8 +91,8 @@ function calculateDistanceTimeSpeed(locationOne, locationTwo, speed) {
 
 async function fetchBusLocation() {
   const auth =
-    "RTBDAh85Pi1YP33askXejncUD1bbZA2Bd_HI3ISXSOy9SnSuAiBLmqgmHq4YIxFqNNsQx1FLiY1lVs1pFyhAuUal5yPCGHsidSI6NjM5NDAsImUiOiIyMDI1LTExLTMwVDE4OjMwOjAwLjAwMCswMDowMCJ9";
-  const url = `https://demo.traccar.org/api/positions?deviceId=11605`;
+    "SDBGAiEAxvkWmDLtUG9AFigPlpZyUcbOWfh13pEWS7xp-ymjElkCIQDGyTlgOG4UQGfXFCMZ-NDN4q-ZmWn1-jxGq3OUW9pgxXsidSI6NjM5NDAsImUiOiIyMDI1LTAxLTMxVDE4OjMwOjAwLjAwMCswMDowMCJ9";
+  const url = `https://demo.traccar.org/api/positions?deviceId=218`;
 
   try {
     const response = await fetch(url, {
